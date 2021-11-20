@@ -19,9 +19,14 @@ class UserListViewModel(repository: UserRepository = UserRepository()) : ViewMod
 
     val users = MutableLiveData<UserListModel>()
 
+    val isErrorBannerVisible = MutableLiveData(false)
+
     init {
-        repository.getUsers {
-            users.value = it
+        repository.getUsers { userListModel ->
+            if (userListModel != null) {
+                users.value = userListModel
+            }
+            isErrorBannerVisible.value = userListModel == null
         }
     }
 }
