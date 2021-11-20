@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ca.rmen.userlist.R
 import ca.rmen.userlist.databinding.ActivityMainBinding
 import ca.rmen.userlist.databinding.UserListItemBinding
-import ca.rmen.userlist.model.UserModel
+import ca.rmen.userlist.viewmodel.UserDisplayData
 import ca.rmen.userlist.viewmodel.UserListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -51,19 +51,19 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         private val DIFF_CALLBACK =
-            object : DiffUtil.ItemCallback<UserModel>() {
-                override fun areItemsTheSame(oldItem: UserModel, newItem: UserModel): Boolean {
+            object : DiffUtil.ItemCallback<UserDisplayData>() {
+                override fun areItemsTheSame(oldItem: UserDisplayData, newItem: UserDisplayData): Boolean {
                     return oldItem.id == newItem.id
                 }
 
-                override fun areContentsTheSame(oldItem: UserModel, newItem: UserModel): Boolean {
+                override fun areContentsTheSame(oldItem: UserDisplayData, newItem: UserDisplayData): Boolean {
                     return oldItem == newItem
                 }
             }
     }
 
     class UsersAdapter :
-        PagingDataAdapter<UserModel, UserViewHolder>(DIFF_CALLBACK) {
+        PagingDataAdapter<UserDisplayData, UserViewHolder>(DIFF_CALLBACK) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
             UserViewHolder(
                 UserListItemBinding.inflate(
@@ -74,11 +74,11 @@ class MainActivity : AppCompatActivity() {
             )
 
         override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-            val userModel = getItem(position)
-            if (userModel != null) {
-                holder.binding.data = userModel
+            val userDisplayData = getItem(position)
+            if (userDisplayData != null) {
+                holder.binding.data = userDisplayData
                 holder.binding.userCard.setOnClickListener {
-                    DetailsActivity.start(holder.binding.root.context, userModel)
+                    DetailsActivity.start(holder.binding.root.context, userDisplayData)
                 }
             }
         }
