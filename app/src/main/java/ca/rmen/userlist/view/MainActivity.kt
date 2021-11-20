@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this, UserListViewModel.factory()).get(UserListViewModel::class.java)
 
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
     }
 }
