@@ -22,19 +22,17 @@ class UserRepository {
             .create(UserListService::class.java)
     }
 
-    fun getUsers(callback: (UserListModel) -> Unit) {
+    fun getUsers(callback: (UserListModel?) -> Unit) {
         val retrofitCallback: Callback<UserListModel> = object : Callback<UserListModel> {
             override fun onResponse(
                 call: Call<UserListModel>,
                 response: Response<UserListModel>
             ) {
-                response.body()?.let {
-                    callback(it)
-                }
+                callback(response.body())
             }
 
             override fun onFailure(call: Call<UserListModel>, t: Throwable) {
-                TODO("Not yet implemented")
+                callback(null)
             }
         }
         service.listRepos().enqueue(retrofitCallback)

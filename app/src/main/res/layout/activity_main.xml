@@ -15,6 +15,20 @@
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="?attr/colorError"
+            android:textColor="?attr/colorOnError"
+            android:gravity="center"
+            android:text="@string/error_banner_text"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{viewModel.isErrorBannerVisible}"
+            tools:visibility="visible" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/users"
             android:layout_width="match_parent"
