@@ -1,0 +1,75 @@
+# User list Android application
+
+## Features
+Displays a list of users from [Random User Generator](https://randomuser.me/documentation).
+
+Tapping on a user in the list opens a details screen.
+
+Pull-to-refresh in the list will retrieve the user list from the backend again.
+
+Day mode:
+|List|Detail|Error|
+|---|---|---|
+|<img src="doc/list-day.png" width="320">|<img src="doc/detail-day.png" width="320">|<img src="doc/error-day.png" width="320">|
+
+Night mode:
+|List|Detail|Error|
+|---|---|---|
+|<img src="doc/list-night.png" width="320">|<img src="doc/detail-night.png" width="320">|<img src="doc/error-night.png" width="320">|
+
+The error banner may appear with or without the list, depending on if we already managed to fetch data or not.
+
+## Architecture
+* The project is currently a single module.
+* It uses MVVM architecture.
+* It uses paging3, retrofit, and glide.
+
+## Development
+I began this project from scratch, and didn't allow myself to look at any of my other projects to find answers. I relied on my memory and Google search to help me find answers to technical questions. The official documentation (Android developer, retrofit, glide) were all helpful. I did also have to consult StackOverflow and some blog posts.
+
+I created a [Github project ](https://github.com/caarmen/UserList/projects/1) with the issues I anticipated, before starting to code. I moved the tickets to "in progress" and "done" during development. "Done" in this case meeant merged.
+
+I focused on sdks with which I was already familiar. I had already used all the libraries I looked at today, though it had been a few years since I looked at retrofit, and I hadn't yet looked at the experimental merged network + db paging3 apis.
+
+
+### Timeline
+
+This is the time I spent on the following tasks:
+
+|Time (minutes)|Task|Moment|
+|---|---|---|
+|8|Creating the github repository, project, and tickets||
+|12|Creating a skeleton project with some dependencies we'll need||
+|24|Setting up data binding and MVVM||
+|32|Add retrofit, execute the request, and display the first user's name in the view|[<img src="doc/networkrequest.png" width="180">](doc/networkrequest.mp4?raw=true)|
+|29|Add a list (`RecyclerView`) with basic UI|[<img src="doc/basiclist.png" width="180">](doc/basiclist.mp4?raw=true)|
+|23|Improve the UI of the list|[<img src="doc/nicerlist.png" width="180">](doc/nicerlist.mp4?raw=true)|
+|31|User detail screen||
+|15|Error handling: add a banner if the request fails||
+|16|Add pull-to-refesh||
+|27|Trying to figure out what to do next: add a test? add persistence to disk with room? persistence with retrofit/okhttp cache? paging?||
+|62|Add paging support with paging3| |3|Try to think about persistence with room or retrofit, let future Carmen deal with it||
+|19|Fix display of user detail screen, and fix architecture issue where view was accessing model (provide backend model to ui model mapping)||
+|17|Try (and fail) to do a viewmodel test. Fail because we can't inspect `PagingData` to do assertions on it||
+|14|Add a UI test for the details screen||
+|2|Look at mediator paging api again|<img src="doc/tired.png" width="180">|
+
+Total of the above: 334 minutes (5.5 hours).
+
+I spent a little bit more time after that to do a couple of bug fixes and create this README.
+
+### Analysis of time
+* I spent 42 minutes just setting up the project and basic architecture. If you ever have to create a project like this in a very limited timebox, this is a time-consuming setup and can leave less time for actual development of the features.
+* After this initial project setup, implementing the easy parts of the app took about an additional 146 minutes (2.4 hours). At this point, I had a functioning list and detail screen, with mostly final UI, basic error handling, and pull-to-refresh.
+* Adding paging was the longest task, at 62 minutes. The average time for the other coding tasks was about 22 minutes.
+* I spent 45 minutes without producing anything: trying to figure out the next "quick wins" and trying and failing some approaches. Eventually, I'm confident all these difficult challenges could be solved, but each one would take more time (combined network + db paging or retrofit cache, more interesting tests).
+
+## Future enhancements
+* Add support for an offline mode. (#10). This could be done with an experimental api in the paging3 library: [RemoteMediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator). This looks like an M/L task that could take a few hours.
+* Add more tests. Currently there is only one integration test, testing the display of the user details screen based on the backend model. 
+  - I would like to add view model tests, but it doesn't seem possible to do assertions on `PagedData` to compare between actual and expected values, based on some mock `UserModel` data
+  - Doing UI tests would require some thought as to how to provide mock data for tests. One solution could be to use a mock server. Another one could be to provide an alternate `UserRepository` implementation for tests based on mock `UserModel` data.  This would require some refactoring and introduction of dependency injectionor a service locator implementation (dagger, hilt, koin, custom...)
+
+
+## Conclusion
+Android development takes time!
