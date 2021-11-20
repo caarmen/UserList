@@ -23,6 +23,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/listPreferredItemHeight">
 
+                <!-- don't need to provide spoken text for the user's photo -->
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/first_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:imageUrl="@{data.picture.thumbnail}"
+                    tools:src="@tools:sample/avatars"
+                    tools:ignore="ContentDescription" />
+
                 <TextView
                     android:id="@+id/first_name"
                     android:layout_width="wrap_content"
@@ -33,7 +47,7 @@
                     android:textAppearance="?attr/textAppearanceListItem"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/last_name"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/avatar"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@tools:sample/first_names" />
 
