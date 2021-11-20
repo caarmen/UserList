@@ -7,9 +7,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ca.rmen.userlist.model.UserIdModel
-import ca.rmen.userlist.model.UserModel
-import ca.rmen.userlist.model.UserNameModel
+import ca.rmen.userlist.model.api.UserIdModel
+import ca.rmen.userlist.model.api.UserModel
+import ca.rmen.userlist.model.api.UserNameModel
 import ca.rmen.userlist.view.DetailsActivity
 import ca.rmen.userlist.viewmodel.ApiMapping
 import org.junit.Test

@@ -46,5 +46,4 @@ class DetailsActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

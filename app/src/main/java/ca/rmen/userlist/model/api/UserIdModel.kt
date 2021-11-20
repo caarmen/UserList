@@ -1,4 +1,4 @@
-package ca.rmen.userlist.model
+package ca.rmen.userlist.model.api
 
 import com.google.gson.annotations.SerializedName
 
