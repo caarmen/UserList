@@ -7,5 +7,8 @@ data class UserModel(
     val name: UserNameModel = UserNameModel(),
 
     @SerializedName("id")
-    val id: UserIdModel = UserIdModel()
+    val id: UserIdModel = UserIdModel(),
+
+    @SerializedName("picture")
+    val picture: UserPictureModel = UserPictureModel()
 )
