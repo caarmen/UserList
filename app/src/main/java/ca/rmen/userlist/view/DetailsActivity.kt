@@ -8,28 +8,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import ca.rmen.userlist.R
 import ca.rmen.userlist.databinding.UserDetailsBinding
-import ca.rmen.userlist.model.UserModel
+import ca.rmen.userlist.viewmodel.UserDisplayData
 
 class DetailsActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_USER_DETAILS = "user_details"
-        fun start(context: Context, userModel: UserModel) {
+        fun start(context: Context, userDisplayData: UserDisplayData) {
             val intent = Intent(context, DetailsActivity::class.java)
-                .putExtra(EXTRA_USER_DETAILS, userModel)
+                .putExtra(EXTRA_USER_DETAILS, userDisplayData)
             context.startActivity(intent)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userModel = intent.getParcelableExtra<UserModel>(EXTRA_USER_DETAILS)!!
+        val userDisplayData = intent.getParcelableExtra<UserDisplayData>(EXTRA_USER_DETAILS)!!
         supportActionBar?.let { actionBar ->
-            actionBar.title = userModel.name.first
+            actionBar.title = userDisplayData.name
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
         val binding =
             DataBindingUtil.setContentView<UserDetailsBinding>(this, R.layout.user_details)
-        binding.data = userModel
+        binding.data = userDisplayData
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
