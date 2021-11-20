@@ -3,6 +3,7 @@ package ca.rmen.userlist.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import ca.rmen.userlist.model.UserListModel
 import ca.rmen.userlist.model.UserRepository
 
 class UserListViewModel(repository: UserRepository = UserRepository()) : ViewModel() {
@@ -16,11 +17,11 @@ class UserListViewModel(repository: UserRepository = UserRepository()) : ViewMod
         }
     }
 
-    val horse = MutableLiveData("initial")
+    val users = MutableLiveData<UserListModel>()
 
     init {
         repository.getUsers {
-            horse.value = it.users.firstOrNull()?.name?.first ?: "nothing found"
+            users.value = it
         }
     }
 }
