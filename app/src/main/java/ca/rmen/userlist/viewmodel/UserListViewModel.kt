@@ -3,7 +3,7 @@ package ca.rmen.userlist.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.map
-import ca.rmen.userlist.model.UserRepository
+import ca.rmen.userlist.model.repository.UserRepository
 import kotlinx.coroutines.flow.map
 
 class UserListViewModel(repository: UserRepository = UserRepository()) : ViewModel() {

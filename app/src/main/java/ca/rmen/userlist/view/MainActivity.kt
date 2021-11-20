@@ -51,28 +51,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-
-        private val DIFF_CALLBACK =
-            object : DiffUtil.ItemCallback<UserDisplayData>() {
-                override fun areItemsTheSame(
-                    oldItem: UserDisplayData,
-                    newItem: UserDisplayData
-                ): Boolean {
-                    return oldItem.id == newItem.id
-                }
-
-                override fun areContentsTheSame(
-                    oldItem: UserDisplayData,
-                    newItem: UserDisplayData
-                ): Boolean {
-                    return oldItem == newItem
-                }
-            }
-    }
-
-    class UsersAdapter :
+    private class UsersAdapter :
         PagingDataAdapter<UserDisplayData, UserViewHolder>(DIFF_CALLBACK) {
+        companion object {
+
+            private val DIFF_CALLBACK =
+                object : DiffUtil.ItemCallback<UserDisplayData>() {
+                    override fun areItemsTheSame(
+                        oldItem: UserDisplayData,
+                        newItem: UserDisplayData
+                    ) = oldItem.id == newItem.id
+
+                    override fun areContentsTheSame(
+                        oldItem: UserDisplayData,
+                        newItem: UserDisplayData
+                    ) = oldItem == newItem
+                }
+        }
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
             UserViewHolder(
                 UserListItemBinding.inflate(
@@ -93,7 +89,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     class UserViewHolder(val binding: UserListItemBinding) : RecyclerView.ViewHolder(binding.root)
-
 }

@@ -1,7 +1,9 @@
-package ca.rmen.userlist.model
+package ca.rmen.userlist.model.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import ca.rmen.userlist.model.api.UserListModel
+import ca.rmen.userlist.model.api.UserModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

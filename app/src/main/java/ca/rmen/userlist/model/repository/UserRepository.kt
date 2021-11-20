@@ -1,8 +1,9 @@
-package ca.rmen.userlist.model
+package ca.rmen.userlist.model.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import ca.rmen.userlist.model.api.UserModel
 import kotlinx.coroutines.flow.Flow
 
 
