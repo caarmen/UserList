@@ -2,7 +2,9 @@ package ca.rmen.userlist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import androidx.paging.map
 import ca.rmen.userlist.model.UserRepository
 
 class UserListViewModel(repository: UserRepository = UserRepository()) : ViewModel() {
@@ -16,5 +18,9 @@ class UserListViewModel(repository: UserRepository = UserRepository()) : ViewMod
         }
     }
 
-    val users = repository.getUsersStream(viewModelScope.coroutineContext)
+    val users = repository.getUsersStream(viewModelScope.coroutineContext).map { pagingData ->
+        pagingData.map {
+            ApiMapping.convert(it)
+        }
+    }
 }
