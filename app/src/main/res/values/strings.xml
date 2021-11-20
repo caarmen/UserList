@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UserList</string>
+    <string name="app_name">User List</string>
     <string name="phone_label">Phone:</string>
     <string name="error_banner_text">Oops, something went wrong!</string>
 </resources>
