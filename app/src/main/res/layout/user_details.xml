@@ -64,7 +64,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/phone"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/first_name" />
+                app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <TextView
                 android:id="@+id/phone"
@@ -75,7 +75,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/phone_label"
-                app:layout_constraintTop_toBottomOf="@+id/first_name" />
+                app:layout_constraintTop_toBottomOf="@+id/name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
