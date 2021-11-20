@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UserList</string>
+    <string name="phone_label">Phone:</string>
 </resources>
