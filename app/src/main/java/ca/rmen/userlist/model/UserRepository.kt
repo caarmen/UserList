@@ -1,40 +1,24 @@
 package ca.rmen.userlist.model
 
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import kotlin.coroutines.CoroutineContext
 
 
 class UserRepository {
-    interface UserListService {
-        @GET("api/?results=50&seed=abc")
-        fun listRepos(): Call<UserListModel>
+
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 10
     }
 
-    private val service: UserListService by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://randomuser.me")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(UserListService::class.java)
-    }
-
-    fun getUsers(callback: (UserListModel?) -> Unit) {
-        val retrofitCallback: Callback<UserListModel> = object : Callback<UserListModel> {
-            override fun onResponse(
-                call: Call<UserListModel>,
-                response: Response<UserListModel>
-            ) {
-                callback(response.body())
-            }
-
-            override fun onFailure(call: Call<UserListModel>, t: Throwable) {
-                callback(null)
-            }
-        }
-        service.listRepos().enqueue(retrofitCallback)
-    }
+    fun getUsersStream(context: CoroutineContext): LiveData<PagingData<UserModel>> = Pager(
+        config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { UserPagingSource() }
+    ).flow.asLiveData(context, 100L)
 }
