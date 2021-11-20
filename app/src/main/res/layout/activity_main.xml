@@ -13,9 +13,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_to_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:onRefreshListener="@{() -> viewModel.fetch()}"
-        app:refreshing="@{viewModel.isFetching}">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,10 +29,10 @@
                 android:text="@string/error_banner_text"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?attr/colorOnError"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:visible="@{viewModel.isErrorBannerVisible}"
                 tools:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView

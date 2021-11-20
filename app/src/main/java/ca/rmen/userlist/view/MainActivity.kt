@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ca.rmen.userlist.R
 import ca.rmen.userlist.databinding.ActivityMainBinding
 import ca.rmen.userlist.databinding.UserListItemBinding
 import ca.rmen.userlist.model.UserModel
 import ca.rmen.userlist.viewmodel.UserListViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +32,19 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         val adapter = UsersAdapter()
         binding.users.adapter = adapter
+        binding.swipeToRefresh.setOnRefreshListener {
+            adapter.refresh()
+        }
+        viewModel.viewModelScope.launch {
+            adapter.loadStateFlow.collect { loadState ->
+                binding.errorBanner.isVisible = loadState.refresh is LoadState.Error
+                binding.swipeToRefresh.isRefreshing = loadState.refresh is LoadState.Loading
+            }
+        }
         viewModel.users.observe(this) {
-            adapter.submitList(it.users)
+            viewModel.viewModelScope.launch {
+                adapter.submitData(it)
+            }
         }
     }
 
@@ -47,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     class UsersAdapter :
-        ListAdapter<UserModel, UserViewHolder>(DIFF_CALLBACK) {
+        PagingDataAdapter<UserModel, UserViewHolder>(DIFF_CALLBACK) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
             UserViewHolder(
                 UserListItemBinding.inflate(
@@ -59,9 +75,11 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
             val userModel = getItem(position)
-            holder.binding.data = userModel
-            holder.binding.userCard.setOnClickListener {
-                DetailsActivity.start(holder.binding.root.context, userModel)
+            if (userModel != null) {
+                holder.binding.data = userModel
+                holder.binding.userCard.setOnClickListener {
+                    DetailsActivity.start(holder.binding.root.context, userModel)
+                }
             }
         }
     }
