@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
@@ -35,15 +36,17 @@ class MainActivity : AppCompatActivity() {
         binding.swipeToRefresh.setOnRefreshListener {
             adapter.refresh()
         }
-        viewModel.viewModelScope.launch {
+        lifecycleScope.launch {
             adapter.loadStateFlow.collect { loadState ->
                 binding.errorBanner.isVisible = loadState.refresh is LoadState.Error
                 binding.swipeToRefresh.isRefreshing = loadState.refresh is LoadState.Loading
             }
         }
-        viewModel.users.observe(this) {
-            viewModel.viewModelScope.launch {
-                adapter.submitData(it)
+        lifecycleScope.launch {
+            viewModel.users.collect { pagingData ->
+                lifecycleScope.launch {
+                    adapter.submitData(pagingData)
+                }
             }
         }
     }
@@ -52,11 +55,17 @@ class MainActivity : AppCompatActivity() {
 
         private val DIFF_CALLBACK =
             object : DiffUtil.ItemCallback<UserDisplayData>() {
-                override fun areItemsTheSame(oldItem: UserDisplayData, newItem: UserDisplayData): Boolean {
+                override fun areItemsTheSame(
+                    oldItem: UserDisplayData,
+                    newItem: UserDisplayData
+                ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
-                override fun areContentsTheSame(oldItem: UserDisplayData, newItem: UserDisplayData): Boolean {
+                override fun areContentsTheSame(
+                    oldItem: UserDisplayData,
+                    newItem: UserDisplayData
+                ): Boolean {
                     return oldItem == newItem
                 }
             }
