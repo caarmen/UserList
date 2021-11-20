@@ -49,10 +49,20 @@ class MainActivity : AppCompatActivity() {
     class UsersAdapter :
         ListAdapter<UserModel, UserViewHolder>(DIFF_CALLBACK) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
-            UserViewHolder(UserListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            UserViewHolder(
+                UserListItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
 
         override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-            holder.binding.data = getItem(position)
+            val userModel = getItem(position)
+            holder.binding.data = userModel
+            holder.binding.userCard.setOnClickListener {
+                DetailsActivity.start(holder.binding.root.context, userModel)
+            }
         }
     }
 
