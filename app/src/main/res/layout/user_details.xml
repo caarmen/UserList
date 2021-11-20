@@ -43,6 +43,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center_horizontal"
                 android:text="@{data.name}"
                 android:textAppearance="?attr/textAppearanceHeadline2"
                 app:layout_constraintEnd_toEndOf="parent"
