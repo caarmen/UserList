@@ -1,11 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
     compileSdk 31
 
+    buildFeatures {
+        dataBinding true
+    }
     defaultConfig {
         applicationId "ca.rmen.userlist"
         minSdk 23
