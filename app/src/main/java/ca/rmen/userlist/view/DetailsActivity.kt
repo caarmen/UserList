@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import ca.rmen.userlist.R
@@ -13,10 +14,14 @@ import ca.rmen.userlist.viewmodel.UserDisplayData
 class DetailsActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_USER_DETAILS = "user_details"
-        fun start(context: Context, userDisplayData: UserDisplayData) {
-            val intent = Intent(context, DetailsActivity::class.java)
+
+        @VisibleForTesting
+        fun getLaunchIntent(context: Context, userDisplayData: UserDisplayData) =
+            Intent(context, DetailsActivity::class.java)
                 .putExtra(EXTRA_USER_DETAILS, userDisplayData)
-            context.startActivity(intent)
+
+        fun start(context: Context, userDisplayData: UserDisplayData) {
+            context.startActivity(getLaunchIntent(context, userDisplayData))
         }
     }
 
