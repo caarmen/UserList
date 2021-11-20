@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="ca.rmen.userlist.model.UserModel" />
+            type="ca.rmen.userlist.viewmodel.UserDisplayData" />
     </data>
 
 
@@ -29,7 +29,7 @@
                 android:layout_marginEnd="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="center"
-                app:imageUrl="@{data.picture.large}"
+                app:imageUrl="@{data.largeAvatarUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -43,26 +43,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{data.name.first}"
+                android:text="@{data.name}"
                 android:textAppearance="?attr/textAppearanceHeadline2"
-                app:layout_constraintEnd_toStartOf="@+id/last_name"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/avatar"
                 tools:text="@tools:sample/first_names" />
 
-            <TextView
-                android:id="@+id/last_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{data.name.last}"
-                android:textAppearance="?attr/textAppearanceHeadline2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/first_name"
-                app:layout_constraintTop_toTopOf="@+id/first_name"
-                tools:text="@tools:sample/last_names" />
 
             <TextView
                 android:id="@+id/phone_label"
