@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import ca.rmen.userlist.model.UserListModel
 import ca.rmen.userlist.model.UserRepository
 
-class UserListViewModel(repository: UserRepository = UserRepository()) : ViewModel() {
+class UserListViewModel(private val repository: UserRepository = UserRepository()) : ViewModel() {
     companion object {
         fun factory(repository: UserRepository = UserRepository()): ViewModelProvider.Factory {
             return object : ViewModelProvider.Factory {
@@ -20,9 +20,16 @@ class UserListViewModel(repository: UserRepository = UserRepository()) : ViewMod
     val users = MutableLiveData<UserListModel>()
 
     val isErrorBannerVisible = MutableLiveData(false)
+    val isFetching = MutableLiveData(false)
 
     init {
+        fetch()
+    }
+
+    fun fetch() {
+        isFetching.value = true
         repository.getUsers { userListModel ->
+            isFetching.value = false
             if (userListModel != null) {
                 users.value = userListModel
             }
