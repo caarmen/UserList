@@ -44,16 +44,14 @@ This is the time I spent on the following tasks:
 |32|Step 4: Add retrofit, execute the request, and display the first user's name in the view|[<img src="doc/step4.png">](https://youtu.be/JUc8qOq51CA)|[<img src="doc/networkrequest.png" width="180">](doc/networkrequest.mp4?raw=true)|
 |29|Step 5: Add a list (`RecyclerView`) with basic UI|[<img src="doc/step5.png">](https://youtu.be/rCdBw1_jj7k)|[<img src="doc/basiclist.png" width="180">](doc/basiclist.mp4?raw=true)|
 |23|Step 6: Improve the UI of the list|[<img src="doc/step6.png">](https://youtu.be/yc4uUrQmk3k)|[<img src="doc/nicerlist.png" width="180">](doc/nicerlist.mp4?raw=true)|
-|31|Step 7: User detail screen|||
-|15|Step 8: Error handling: add a banner if the request fails|||
-|16|Step 9: Add pull-to-refesh|||
-|27|Step 10: Trying to figure out what to do next: add a test? add persistence to disk with room? persistence with retrofit/okhttp cache? paging?|||
-|62|Step 11: Add paging support with paging3|||
-|3|Step 12: Try to think about persistence with room or retrofit, let future Carmen deal with it|||
-|19|Step 13: Fix display of user detail screen, and fix architecture issue where view was accessing model (provide backend model to ui model mapping)|||
-|17|Step 14: Try (and fail) to do a viewmodel test. Fail because we can't inspect `PagingData` to do assertions on it|||
-|14|Step 15: Add a UI test for the details screen|||
-|2|Step 16: Look at mediator paging api again||<img src="doc/tired.png" width="180">|
+|31|Step 7: User detail screen|[<img src="doc/step7.png">](https://youtu.be/PxTbYE04JR0)||
+|15|Step 8: Error handling: add a banner if the request fails|[<img src="doc/step8.png">](https://youtu.be/d1NT98J1pQE)||
+|16|Step 9: Add pull-to-refesh|[<img src="doc/step9.png">](https://youtu.be/87H4DrTrDqQ)||
+|27|Step 10: Trying to figure out what to do next: add a test? add persistence to disk with room? persistence with retrofit/okhttp cache? paging?|[<img src="doc/step10.png">](https://youtu.be/53Tcsabi-Qg)||
+|62|Step 11: Add paging support with paging3|[<img src="doc/step11.png">](https://youtu.be/psbDKe-H_Dg)<br>[<img src="doc/step12.png">](https://youtu.be/rW1jO3TpQeU)||
+|3<br>19|Step 12: Try to think about persistence with room or retrofit, let future Carmen deal with it<br>Step 13: Fix display of user detail screen, and fix architecture issue where view was accessing model (provide backend model to ui model mapping)|[<img src="doc/step13.png">](https://youtu.be/sRcOjiEkz8g)||
+|17|Step 14: Try (and fail) to do a viewmodel test. Fail because we can't inspect `PagingData` to do assertions on it|[<img src="doc/step14.png">](https://youtu.be/jI2U0_jUh54)||
+|14<br>2|Step 15: Add a UI test for the details screen<br>Step 16: Look at mediator paging api again|[<img src="doc/step15.png">](https://youtu.be/eh0dTHk8VN8)|<img src="doc/tired.png" width="180">|
 
 Total of the above: 334 minutes (5.5 hours).
 
