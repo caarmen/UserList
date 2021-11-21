@@ -36,23 +36,24 @@ I focused on sdks with which I was already familiar. I had already used all the 
 
 This is the time I spent on the following tasks:
 
-|Time (minutes)|Task|Moment|
-|---|---|---|
-|8|Creating the github repository, project, and tickets||
-|12|Creating a skeleton project with some dependencies we'll need||
-|24|Setting up data binding and MVVM||
-|32|Add retrofit, execute the request, and display the first user's name in the view|[<img src="doc/networkrequest.png" width="180">](doc/networkrequest.mp4?raw=true)|
-|29|Add a list (`RecyclerView`) with basic UI|[<img src="doc/basiclist.png" width="180">](doc/basiclist.mp4?raw=true)|
-|23|Improve the UI of the list|[<img src="doc/nicerlist.png" width="180">](doc/nicerlist.mp4?raw=true)|
-|31|User detail screen||
-|15|Error handling: add a banner if the request fails||
-|16|Add pull-to-refesh||
-|27|Trying to figure out what to do next: add a test? add persistence to disk with room? persistence with retrofit/okhttp cache? paging?||
-|62|Add paging support with paging3| |3|Try to think about persistence with room or retrofit, let future Carmen deal with it||
-|19|Fix display of user detail screen, and fix architecture issue where view was accessing model (provide backend model to ui model mapping)||
-|17|Try (and fail) to do a viewmodel test. Fail because we can't inspect `PagingData` to do assertions on it||
-|14|Add a UI test for the details screen||
-|2|Look at mediator paging api again|<img src="doc/tired.png" width="180">|
+|Time (minutes)|Task|Video|Moment|
+|---|---|---|---|
+|8|Step 1: Creating the github repository, project, and tickets|[<img src="doc/step1.png">](https://youtu.be/pJPxAbowak4)||
+|12|Step 2: Creating a skeleton project with some dependencies we'll need|[<img src="doc/step2.png">](https://youtu.be/Az6TheyBqzw)||
+|24|Step 3: Setting up data binding and MVVM|[<img src="doc/step3.png">](https://youtu.be/cm915rndPM8)||
+|32|Step 4: Add retrofit, execute the request, and display the first user's name in the view|[<img src="doc/step4.png">](https://youtu.be/JUc8qOq51CA)|[<img src="doc/networkrequest.png" width="180">](doc/networkrequest.mp4?raw=true)|
+|29|Step 5: Add a list (`RecyclerView`) with basic UI|[<img src="doc/step5.png">](https://youtu.be/rCdBw1_jj7k)|[<img src="doc/basiclist.png" width="180">](doc/basiclist.mp4?raw=true)|
+|23|Step 6: Improve the UI of the list|[<img src="doc/step6.png">](https://youtu.be/yc4uUrQmk3k)|[<img src="doc/nicerlist.png" width="180">](doc/nicerlist.mp4?raw=true)|
+|31|Step 7: User detail screen|||
+|15|Step 8: Error handling: add a banner if the request fails|||
+|16|Step 9: Add pull-to-refesh|||
+|27|Step 10: Trying to figure out what to do next: add a test? add persistence to disk with room? persistence with retrofit/okhttp cache? paging?|||
+|62|Step 11: Add paging support with paging3|||
+|3|Step 12: Try to think about persistence with room or retrofit, let future Carmen deal with it|||
+|19|Step 13: Fix display of user detail screen, and fix architecture issue where view was accessing model (provide backend model to ui model mapping)|||
+|17|Step 14: Try (and fail) to do a viewmodel test. Fail because we can't inspect `PagingData` to do assertions on it|||
+|14|Step 15: Add a UI test for the details screen|||
+|2|Step 16: Look at mediator paging api again||<img src="doc/tired.png" width="180">|
 
 Total of the above: 334 minutes (5.5 hours).
 
@@ -93,4 +94,5 @@ However, such an exercise does not demonstrate very well the skills or activitie
     - the activity 1.4.0 upgrade broke tests due to how we were mocking behavior of another 3rd party library
     - other upgrades with minor impacts on code (like nullaibility changes in the apis): minor but cumulative in time spent
 
-
+### Different mindset
+Trying to develop a maximum of features in such a limited time put me in a different mindset. Managing persistence to disk and paging is a complex topic. Having only a network request and using paging is straightforward. Having only a database and paging is similarly straightforward. Managing paging with two data sources: network and database, however, is not, in my opinion, a task that can be implemented, from scratch, in a half hour. This requires thought and exploration. The paging library provides a class for this but it's experimental, which would impact the chosen solution. During this exercise, I found myself trying to find a quick win that could be implemented in an hour or less. (For example relying on network request cache instead of implementing a database). But this isn't how I would implement such a feature in a real projet. I would hope to never have to make such an important decision on the architecture and implementation of an offline mode, with a time constraint of only an hour or so.
