@@ -33,7 +33,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
-                    app:imageUrl="@{data.smallAvatarUrl}"
+                    app:avatarUrl="@{data.smallAvatarUrl}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/name"
                     app:layout_constraintStart_toStartOf="parent"
