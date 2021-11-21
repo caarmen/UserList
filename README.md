@@ -32,7 +32,7 @@ I created a [Github project ](https://github.com/caarmen/UserList/projects/1) wi
 I focused on sdks with which I was already familiar. I had already used all the libraries I looked at today, though it had been a few years since I looked at retrofit, and I hadn't yet looked at the experimental merged network + db paging3 apis.
 
 
-### Timeline
+### Initial development timeline
 
 This is the time I spent on the following tasks:
 
@@ -64,11 +64,12 @@ I spent a little bit more time after that to do a couple of bug fixes and create
 * Adding paging was the longest task, at 62 minutes. The average time for the other coding tasks was about 22 minutes.
 * I spent 45 minutes without producing anything: trying to figure out the next "quick wins" and trying and failing some approaches. Eventually, I'm confident all these difficult challenges could be solved, but each one would take more time (combined network + db paging or retrofit cache, more interesting tests).
 
-## Future enhancements
-* Add support for an offline mode. (#10). This could be done with an experimental api in the paging3 library: [RemoteMediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator). This looks like an M/L task that could take a few hours.
-* Add more tests. Currently there is only one integration test, testing the display of the user details screen based on the backend model. 
+## Next steps
+* - [ ] L: Add support for an offline mode. (#10). This could be done with an experimental api in the paging3 library: [RemoteMediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator).
+* - [ ] L: Add more tests. Currently there is only one integration test, testing the display of the user details screen based on the backend model. 
   - I would like to add view model tests, but it doesn't seem possible to do assertions on `PagedData` to compare between actual and expected values, based on some mock `UserModel` data
   - Doing UI tests would require some thought as to how to provide mock data for tests. One solution could be to use a mock server. Another one could be to provide an alternate `UserRepository` implementation for tests based on mock `UserModel` data.  This would require some refactoring and introduction of dependency injectionor a service locator implementation (dagger, hilt, koin, custom...)
+* - [X] XS: Use round avatars
 
 
 ## Conclusion
