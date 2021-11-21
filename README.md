@@ -74,3 +74,23 @@ I spent a little bit more time after that to do a couple of bug fixes and create
 
 ## Conclusion
 Android development takes time!
+
+This kind of exercise, where a developer creates an application from scratch in a limited timebox, only very partially represents the type of work an Android developer does daily. It can demonstrate the sdks and architectures the developer already knows.
+
+However, such an exercise does not demonstrate very well the skills or activities of developers which are required on a daily basis: 
+
+* Planning: estimation of tasks, splitting tasks, reasearch and discussion with other developers on the best approach to implement a feature, when multiple options exist.
+* Reviewing code.
+* Debugging and troubleshooting are critical skills which are practically absent from this type of exercise.
+* Maintenance: In a real environment, a developer can spend a significant time on maintenance: 
+  - updating an app to use new apis when sdks deprecate old ones.
+    - For example, migrating to use the new "start activity for result" apis took several days in our work project, with multiple discussions on different implementation approaches
+  - reporting bugs in quality bug reports to third-party sdk providers, sometimes requiring creating a bug reproduction project.
+  - For example, in the last few weeks, I spent over 2 complete days on dependency updates for work:
+    - the kotlin 1.6 upgrade caused compilation errors with experimental annotation apis, with multiple possible solutions involving debugging gradle configuration and tasks
+    - the new appcompat library release now uses emoji2, making us migrate from the old emoji library, requiring investigation of automatic vs manual initialization of the library
+    - the robolectric 4.7 upgrade introduced OutOfMemoryErrors which required troubleshooting, analyzing memory dump files
+    - the activity 1.4.0 upgrade broke tests due to how we were mocking behavior of another 3rd party library
+    - other upgrades with minor impacts on code (like nullaibility changes in the apis): minor but cumulative in time spent
+
+
