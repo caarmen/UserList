@@ -14,3 +14,7 @@ build/
 .externalNativeBuild
 .cxx
 local.properties
+
+# ant projects:
+gen/
+bin/
