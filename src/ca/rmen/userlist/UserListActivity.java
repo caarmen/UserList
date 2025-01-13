@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.ListView;
 
 public class UserListActivity extends Activity {
@@ -34,6 +35,12 @@ public class UserListActivity extends Activity {
 				listView.setAdapter(new UserListAdapter(UserListActivity.this, users));
 			}
 		}.execute();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 }
