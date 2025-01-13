@@ -50,6 +50,9 @@ public class UserListActivity extends Activity {
 		if (item.getItemId() == R.id.menu_item_about) {
 			new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage(R.string.about_copyright)
 					.setPositiveButton(android.R.string.ok, null).show();
+		} else if (item.getItemId() == R.id.menu_item_licenses) {
+			new AlertDialog.Builder(this).setTitle(R.string.menu_item_licenses).setItems(R.array.licenses, null)
+			.setPositiveButton(android.R.string.ok, null).show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
