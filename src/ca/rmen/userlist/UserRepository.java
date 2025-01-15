@@ -14,7 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class UserRepository {
-	private final String sourceUrl = "http://192.168.1.141:8080/data.json";
+	private final String sourceUrl = "http://rmen.ca/userlist/data.json";
 	private static final TypeToken<Response> RESPONSE = new TypeToken<Response>() {
 	};
 	private static final Gson GSON = new Gson();
