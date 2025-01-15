@@ -5,13 +5,17 @@ then
   exit 1
 fi
 
-git clone git@github.com:JakeWharton/ActionBarSherlock.git -b 3.5.1
-pushd ActionBarSherlock/library || (echo "Couldn't find ActionBarSherlock" && exit)
-
-"${ANDROID_SDK_ROOT}/tools/android" update project --path . --target android-13
+mkdir appcompat
+pushd appcompat || (echo "Couldn't find appcompat" && exit)
+tar xf ../appcompat-v7-18.0.0.aar
+mkdir libs
+mv classes.jar libs/
+"${ANDROID_SDK_ROOT}/tools/android" create lib-project --name appcompat --path . --package android.support.v7.appcompat --target android-14
 ant debug
-# build the jar file
 ant release
-# eclipse looks for the library in actionbarsherlock.jar (ant looks for it in classes.jar).
-cp ActionBarSherlock/library/bin/classes.jar ActionBarSherlock/library/bin/actionbarsherlock.jar
+
+# eclipse looks for the library in appcompat.jar.
+cp appcompat/lib/classes.jar appcompat/bin/appcompat.jar
+
+
 popd || exit

@@ -19,5 +19,6 @@ local.properties
 gen/
 bin/
 
-# other projects built from git
-ActionBarSherlock/
+# other projects setup with setup.sh
+appcompat/
+
