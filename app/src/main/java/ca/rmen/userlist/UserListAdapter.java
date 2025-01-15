@@ -1,77 +1,82 @@
 package ca.rmen.userlist;
 
-import java.util.List;
-
-import ca.rmen.userlist.R;
-
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UserListAdapter extends ArrayAdapter<UserModel> {
-	private static final String TAG = UserListAdapter.class.getSimpleName();
+import java.util.List;
 
-	private final List<UserModel> mUsers;
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
+    private static final String TAG = UserListAdapter.class.getSimpleName();
 
-	public UserListAdapter(Context context, List<UserModel> users) {
-		super(context, R.layout.user_item, users);
-		mUsers = users;
-	}
+    private final List<UserModel> mUsers;
 
-	@Override
-	public long getItemId(int position) {
-		return -1;
-	}
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mAvatarView;
+        public TextView mNameView;
+        public AsyncTask<UserModel, Void, Bitmap> mImageLoadingTask = null;
 
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		final UserModel user = mUsers.get(position);
-		// Get or create our user item view.
-		final View result = convertView == null
-				? LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item, null)
-				: convertView;
+        public ViewHolder(View parent) {
+            super(parent);
+            mAvatarView = (ImageView) parent.findViewById(R.id.avatar);
+            mNameView = (TextView) parent.findViewById(R.id.name);
+        }
+    }
 
-		// Set the name.
-		TextView nameView = (TextView) result.findViewById(R.id.name);
-		final ImageView avatarView = (ImageView) result.findViewById(R.id.avatar);
-		nameView.setText(user.name.first + " " + user.name.last);
+    public UserListAdapter(List<UserModel> users) {
+        mUsers = users;
+    }
 
-		// Set the image. Fetch the image in the background.
-		AsyncTask<UserModel, Void, Bitmap> previousTask = (AsyncTask<UserModel, Void, Bitmap>) result.getTag();
-		if (previousTask != null)
-			previousTask.cancel(true);
-		AsyncTask<UserModel, Void, Bitmap> avatarTask = new AsyncTask<UserModel, Void, Bitmap>() {
+    @Override
+    public UserListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item, parent, false);
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
+    }
 
-			@Override
-			protected Bitmap doInBackground(UserModel... user) {
-				Log.d(TAG, "doInBackground, position = " + position + ", user = " + user[0].name.first);
-				return UserRepository.getAvatar(user[0]);
-			}
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final UserModel user = mUsers.get(position);
 
-			@Override
-			protected void onPostExecute(Bitmap bitmap) {
-				Log.d(TAG, "onPostExecute, isShown = " + result.isShown() + ", position = " + position + ", user = "
-						+ user.name.first);
-				// If the user is scrolling quickly, this view may not be for
-				// this avatar anymore.
-				// Libraries like Picasso and Glide handle this nicely for us,
-				// but they require more recent versions of Android.
-				if (!isCancelled()) {
-					avatarView.setImageBitmap(bitmap);
-				}
-			}
+        holder.mNameView.setText(user.name.first + " " + user.name.last);
 
-		};
-		result.setTag(avatarTask);
-		avatarTask.execute(user);
-		return result;
-	}
+        // Set the image. Fetch the image in the background.
+        if (holder.mImageLoadingTask != null)
+            holder.mImageLoadingTask.cancel(true);
+        holder.mImageLoadingTask = new AsyncTask<UserModel, Void, Bitmap>() {
+
+            @Override
+            protected Bitmap doInBackground(UserModel... user) {
+                Log.d(TAG, "doInBackground, position = " + position + ", user = " + user[0].name.first);
+                return UserRepository.getAvatar(user[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                Log.d(TAG, "onPostExecute, isShown = " + holder.itemView.isShown() + ", position = " + position + ", user = "
+                        + user.name.first);
+                // If the user is scrolling quickly, this view may not be for
+                // this avatar anymore.
+                // Libraries like Picasso and Glide handle this nicely for us,
+                // but they require more recent versions of Android.
+                if (!isCancelled()) {
+                    holder.mAvatarView.setImageBitmap(bitmap);
+                }
+            }
+
+        };
+        holder.mImageLoadingTask.execute(user);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mUsers.size();
+    }
 
 }

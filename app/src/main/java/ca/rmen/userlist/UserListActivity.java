@@ -9,11 +9,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 public class UserListActivity extends ActionBarActivity {
 
@@ -24,7 +24,11 @@ public class UserListActivity extends ActionBarActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		final ListView listView = (ListView) findViewById(R.id.listView1);
+		final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+		recyclerView.setHasFixedSize(true);
+		final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
 
 		new AsyncTask<Void, Void, List<UserModel>>() {
 
@@ -36,7 +40,7 @@ public class UserListActivity extends ActionBarActivity {
 			@Override
 			protected void onPostExecute(List<UserModel> users) {
 				Log.v(TAG, "Got user list");
-				listView.setAdapter(new UserListAdapter(UserListActivity.this, users));
+				recyclerView.setAdapter(new UserListAdapter(users));
 			}
 		}.execute();
 	}
@@ -57,7 +61,7 @@ public class UserListActivity extends ActionBarActivity {
 		return false;
 	}
 
-	class AboutDialogFragment extends DialogFragment {
+	public class AboutDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(UserListActivity.this).setTitle(R.string.app_name)
@@ -68,7 +72,7 @@ public class UserListActivity extends ActionBarActivity {
 		public static final String TAG = "AboutDialogFragment";
 	}
 
-	class LicenseDialogFragment extends DialogFragment {
+	public class LicenseDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(UserListActivity.this).setTitle(R.string.menu_item_licenses)
