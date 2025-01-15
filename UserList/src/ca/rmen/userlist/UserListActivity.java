@@ -4,16 +4,17 @@ import java.util.List;
 
 import ca.rmen.userlist.R;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.widget.ListView;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
 
-public class UserListActivity extends Activity {
+public class UserListActivity extends FragmentActivity {
 
 	private static final String TAG = UserListActivity.class.getSimpleName();
 	private UserRepository mRepository = new UserRepository();
@@ -22,6 +23,8 @@ public class UserListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		final ActionBar ab = getSupportActionBar();
+		ab.setDisplayHomeAsUpEnabled(false);
 		final ListView listView = (ListView) findViewById(R.id.listView1);
 
 		new AsyncTask<Void, Void, List<UserModel>>() {
