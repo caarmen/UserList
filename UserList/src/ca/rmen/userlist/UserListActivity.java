@@ -5,6 +5,8 @@ import java.util.List;
 import ca.rmen.userlist.R;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.widget.ListView;
 import android.support.v4.app.ActionBar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 public class UserListActivity extends FragmentActivity {
@@ -51,13 +54,41 @@ public class UserListActivity extends FragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_item_about) {
-			new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage(R.string.about_copyright)
-					.setPositiveButton(android.R.string.ok, null).show();
+			new AboutDialogFragment().show(getSupportFragmentManager(), AboutDialogFragment.TAG);
 		} else if (item.getItemId() == R.id.menu_item_licenses) {
-			new AlertDialog.Builder(this).setTitle(R.string.menu_item_licenses).setItems(R.array.licenses, null)
-			.setPositiveButton(android.R.string.ok, null).show();
+			new LicenseDialogFragment().show(getSupportFragmentManager(), LicenseDialogFragment.TAG);
 		}
-		return super.onOptionsItemSelected(item);
+		return false;
+	}
+
+	class AboutDialogFragment extends DialogFragment {
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			return new AlertDialog.Builder(UserListActivity.this).setTitle(R.string.app_name)
+					.setMessage(R.string.about_copyright)
+					.setPositiveButton(android.R.string.ok, new EmptyDialogListener()).create();
+		}
+
+		public static final String TAG = "AboutDialogFragment";
+	}
+
+	class LicenseDialogFragment extends DialogFragment {
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			return new AlertDialog.Builder(UserListActivity.this).setTitle(R.string.menu_item_licenses)
+					.setItems(R.array.licenses, null).setPositiveButton(android.R.string.ok, new EmptyDialogListener())
+					.create();
+		}
+
+		public static final String TAG = "LicenseDialogFragment";
+
+	}
+
+	class EmptyDialogListener implements DialogInterface.OnClickListener {
+
+		@Override
+		public void onClick(DialogInterface arg0, int arg1) {
+		}
 	}
 
 }
