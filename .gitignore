@@ -21,4 +21,5 @@ bin/
 
 # other projects setup with setup.sh
 appcompat/
+supportv4/
 
