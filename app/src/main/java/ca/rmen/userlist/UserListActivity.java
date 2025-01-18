@@ -2,38 +2,53 @@ package ca.rmen.userlist;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.databinding.Observable;
+import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.List;
+
+import ca.rmen.userlist.databinding.MainBinding;
+
 
 public class UserListActivity extends ActionBarActivity {
 
     private static final String TAG = UserListActivity.class.getSimpleName();
-    private UserRepository mRepository = new UserRepository();
+    private UserListViewModel mViewModel = new UserListViewModel();
+    private MainBinding mBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+        mBinding = MainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+        mBinding.setViewModel(mViewModel);
+
+        mBinding.recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        mRepository.fetchUsers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userModels ->
-                        recyclerView.setAdapter(new UserListAdapter(userModels))
-                );
+        mBinding.recyclerView.setLayoutManager(layoutManager);
+        mViewModel.users.addOnPropertyChangedCallback(mUserListListener);
+        mViewModel.refresh();
     }
+
+    @Override
+    protected void onDestroy() {
+        mViewModel.users.removeOnPropertyChangedCallback(mUserListListener);
+        super.onDestroy();
+    }
+
+    private Observable.OnPropertyChangedCallback mUserListListener = new Observable.OnPropertyChangedCallback() {
+        @Override
+        public void onPropertyChanged(Observable sender, int propertyId) {
+            mBinding.recyclerView.setAdapter(new UserListAdapter(((ObservableField<List<UserUiModel>>) sender).get()));
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

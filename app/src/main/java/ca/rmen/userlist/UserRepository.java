@@ -19,7 +19,7 @@ public class UserRepository {
         Observable<Response> listUsers();
     }
 
-    public Observable<List<UserUiModel>> fetchUsers() {
+    public Observable<List<UserApiModel>> fetchUsers() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://rmen.ca/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -27,9 +27,6 @@ public class UserRepository {
                 .build();
 
         UserApi userListApi = retrofit.create(UserApi.class);
-        return userListApi.listUsers().map(response -> response.results)
-                .flatMapIterable(apiUsers -> apiUsers).map(
-                        apiUser -> new UserUiModel(apiUser.name.first + " " + apiUser.name.last, apiUser.picture.thumbnail)
-                ).toList();
+        return userListApi.listUsers().map(response -> response.results);
     }
 }
