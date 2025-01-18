@@ -11,7 +11,7 @@ import rx.Observable;
 public class UserRepository {
 
     private static class Response {
-        List<UserModel> results;
+        List<UserApiModel> results;
     }
 
     public interface UserApi {
@@ -19,7 +19,7 @@ public class UserRepository {
         Observable<Response> listUsers();
     }
 
-    public Observable<List<UserModel>> fetchUsers() {
+    public Observable<List<UserUiModel>> fetchUsers() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://rmen.ca/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -27,7 +27,9 @@ public class UserRepository {
                 .build();
 
         UserApi userListApi = retrofit.create(UserApi.class);
-        return userListApi.listUsers().map(response -> response.results);
-
+        return userListApi.listUsers().map(response -> response.results)
+                .flatMapIterable(apiUsers -> apiUsers).map(
+                        apiUser -> new UserUiModel(apiUser.name.first + " " + apiUser.name.last, apiUser.picture.thumbnail)
+                ).toList();
     }
 }

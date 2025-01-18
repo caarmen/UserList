@@ -1,6 +1,6 @@
 package ca.rmen.userlist;
 
-public class UserModel {
+public class UserApiModel {
 
 	public static class Name {
 		String first;

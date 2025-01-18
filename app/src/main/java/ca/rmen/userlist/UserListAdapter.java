@@ -14,7 +14,7 @@ import java.util.List;
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     private static final String TAG = UserListAdapter.class.getSimpleName();
 
-    private final List<UserModel> mUsers;
+    private final List<UserUiModel> mUsers;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mAvatarView;
@@ -27,7 +27,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         }
     }
 
-    public UserListAdapter(List<UserModel> users) {
+    public UserListAdapter(List<UserUiModel> users) {
         mUsers = users;
     }
 
@@ -39,9 +39,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final UserModel user = mUsers.get(position);
-        holder.mNameView.setText(user.name.first + " " + user.name.last);
-        Glide.with(holder.mAvatarView.getContext()).load(user.picture.thumbnail).into(holder.mAvatarView);
+        final UserUiModel user = mUsers.get(position);
+        holder.mNameView.setText(user.name);
+        Glide.with(holder.mAvatarView.getContext()).load(user.avatarUrl).into(holder.mAvatarView);
     }
 
     @Override
