@@ -11,10 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.List;
-
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class UserListActivity extends ActionBarActivity {
@@ -30,12 +27,12 @@ public class UserListActivity extends ActionBarActivity {
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        mRepository.fetchUsers().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<UserModel>>() {
-            @Override
-            public void call(List<UserModel> userModels) {
-                recyclerView.setAdapter(new UserListAdapter(userModels));
-            }
-        });
+        mRepository.fetchUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userModels ->
+                        recyclerView.setAdapter(new UserListAdapter(userModels))
+                );
     }
 
     @Override

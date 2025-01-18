@@ -7,7 +7,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import rx.Observable;
-import rx.functions.Func1;
 
 public class UserRepository {
 
@@ -28,12 +27,7 @@ public class UserRepository {
                 .build();
 
         UserApi userListApi = retrofit.create(UserApi.class);
-        return userListApi.listUsers().map(new Func1<Response, List<UserModel>>() {
-            @Override
-            public List<UserModel> call(Response response) {
-                return response.results;
-            }
-        });
+        return userListApi.listUsers().map(response -> response.results);
 
     }
 }
