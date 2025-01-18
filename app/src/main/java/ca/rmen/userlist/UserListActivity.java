@@ -66,10 +66,10 @@ public class UserListActivity extends ActionBarActivity {
         return false;
     }
 
-    public class AboutDialogFragment extends DialogFragment {
+    public static class AboutDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new AlertDialog.Builder(UserListActivity.this).setTitle(R.string.app_name)
+            return new AlertDialog.Builder(getContext()).setTitle(R.string.app_name)
                     .setMessage(R.string.about_copyright)
                     .setPositiveButton(android.R.string.ok, new EmptyDialogListener()).create();
         }
@@ -77,10 +77,10 @@ public class UserListActivity extends ActionBarActivity {
         public static final String TAG = "AboutDialogFragment";
     }
 
-    public class LicenseDialogFragment extends DialogFragment {
+    public static class LicenseDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new AlertDialog.Builder(UserListActivity.this).setTitle(R.string.menu_item_licenses)
+            return new AlertDialog.Builder(getContext()).setTitle(R.string.menu_item_licenses)
                     .setItems(R.array.licenses, null).setPositiveButton(android.R.string.ok, new EmptyDialogListener())
                     .create();
         }
@@ -89,7 +89,7 @@ public class UserListActivity extends ActionBarActivity {
 
     }
 
-    class EmptyDialogListener implements DialogInterface.OnClickListener {
+    static class EmptyDialogListener implements DialogInterface.OnClickListener {
 
         @Override
         public void onClick(DialogInterface arg0, int arg1) {
