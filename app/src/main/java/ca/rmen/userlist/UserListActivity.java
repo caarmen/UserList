@@ -6,8 +6,8 @@ import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +17,7 @@ import java.util.List;
 import ca.rmen.userlist.databinding.MainBinding;
 
 
-public class UserListActivity extends ActionBarActivity {
+public class UserListActivity extends AppCompatActivity {
 
     private static final String TAG = UserListActivity.class.getSimpleName();
     private UserListViewModel mViewModel = new UserListViewModel();
