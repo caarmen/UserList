@@ -16,6 +16,7 @@ public class UserListViewModel {
     public void refresh() {
         isLoading.set(true);
         mRepository.fetchUsers()
+                .toObservable()
                 .flatMapIterable(apiUsers -> apiUsers)
                 .map(
                         apiUser -> new UserUiModel(
