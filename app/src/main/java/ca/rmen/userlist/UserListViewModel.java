@@ -5,20 +5,17 @@ import android.databinding.ObservableField;
 
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class UserListViewModel {
     private UserRepository mRepository = new UserRepository();
 
+    public ObservableBoolean isError = new ObservableBoolean(false);
     public ObservableBoolean isLoading = new ObservableBoolean(false);
     ObservableField<List<UserUiModel>> users = new ObservableField<>();
 
     public void refresh() {
         isLoading.set(true);
         mRepository.fetchUsers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .flatMapIterable(apiUsers -> apiUsers)
                 .map(
                         apiUser -> new UserUiModel(
@@ -28,6 +25,11 @@ public class UserListViewModel {
                 ).toList()
                 .subscribe(userModels -> {
                             users.set(userModels);
+                            isError.set(false);
+                            isLoading.set(false);
+                        },
+                        throwable -> {
+                            isError.set(true);
                             isLoading.set(false);
                         }
                 );
