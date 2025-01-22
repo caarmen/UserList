@@ -8,9 +8,12 @@
         <item name="colorPrimaryDark">#008a40</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#ffff00</item>
+        <item name="android:colorBackground">@color/background</item>
         <item name="alertDialogTheme">@style/AppAlertDialogTheme</item>
     </style>
     <style name="AppAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorAccent">#ffff00</item>
     </style>
+    <color name="background">#000</color>
+    <color name="surface">#222</color>
 </resources>
