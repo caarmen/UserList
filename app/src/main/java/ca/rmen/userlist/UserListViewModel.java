@@ -1,20 +1,34 @@
 package ca.rmen.userlist;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
 
-public class UserListViewModel {
+public class UserListViewModel extends AndroidViewModel {
     private UserRepository mRepository = new UserRepository();
 
-    public ObservableBoolean isError = new ObservableBoolean(false);
-    public ObservableBoolean isLoading = new ObservableBoolean(false);
-    ObservableField<List<UserUiModel>> users = new ObservableField<>();
+    private MutableLiveData<Boolean> mIsError = new MutableLiveData<>();
+    public LiveData<Boolean> isError = mIsError;
+
+    private MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
+    public LiveData<Boolean> isLoading = mIsLoading;
+
+    private MutableLiveData<List<UserUiModel>> mUsers = new MutableLiveData<>();
+    LiveData<List<UserUiModel>> users = mUsers;
+
+    public UserListViewModel(@NonNull Application application) {
+        super(application);
+    }
 
     public void refresh() {
-        isLoading.set(true);
+        mIsLoading.setValue(true);
         mRepository.fetchUsers()
                 .toObservable()
                 .flatMapIterable(apiUsers -> apiUsers)
@@ -25,13 +39,13 @@ public class UserListViewModel {
                         )
                 ).toList()
                 .subscribe(userModels -> {
-                            users.set(userModels);
-                            isError.set(false);
-                            isLoading.set(false);
+                            mUsers.setValue(userModels);
+                            mIsError.setValue(false);
+                            mIsLoading.setValue(false);
                         },
                         throwable -> {
-                            isError.set(true);
-                            isLoading.set(false);
+                            mIsError.setValue(true);
+                            mIsLoading.setValue(false);
                         }
                 );
     }
