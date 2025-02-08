@@ -1,7 +1,7 @@
 package ca.rmen.userlist;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -30,7 +30,7 @@ public class UserListActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mBinding.recyclerView.setLayoutManager(layoutManager);
 
-        mViewModel = ViewModelProviders.of(this).get(UserListViewModel.class);
+        mViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(UserListViewModel.class);
         mBinding.setViewModel(mViewModel);
         mViewModel.users.observe(this, users -> {
             mBinding.recyclerView.setAdapter(new UserListAdapter(users));
