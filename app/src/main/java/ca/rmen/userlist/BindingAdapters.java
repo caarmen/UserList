@@ -1,9 +1,9 @@
 package ca.rmen.userlist;
 
 
-import android.arch.lifecycle.LiveData;
-import android.databinding.BindingAdapter;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.lifecycle.LiveData;
+import androidx.databinding.BindingAdapter;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ImageView;
 
