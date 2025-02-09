@@ -25,6 +25,8 @@ public class UserListViewModel extends AndroidViewModel {
 
     public UserListViewModel(@NonNull Application application) {
         super(application);
+        mIsError.setValue(false);
+        mIsLoading.setValue(false);
     }
 
     public void refresh() {

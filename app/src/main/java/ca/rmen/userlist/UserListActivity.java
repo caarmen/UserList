@@ -35,14 +35,8 @@ public class UserListActivity extends AppCompatActivity {
         mViewModel.users.observe(this, users -> {
             mBinding.recyclerView.setAdapter(new UserListAdapter(users));
         });
-        // In 2017 we don't yet have full databinding support for livedata.
-        mViewModel.isLoading.observe(this, isLoading ->{
-            mBinding.invalidateAll();
-        });
-        mViewModel.isError.observe(this, isError ->{
-            mBinding.invalidateAll();
-        });
         mViewModel.refresh();
+        mBinding.setLifecycleOwner(this);
     }
 
     @Override
